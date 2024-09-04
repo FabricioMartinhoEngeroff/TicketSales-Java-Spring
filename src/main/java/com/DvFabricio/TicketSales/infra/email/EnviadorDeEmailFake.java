@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("default")
+@Profile("dev")
 public class EnviadorDeEmailFake implements EnviadorDeEmail {
 
     @Async

@@ -8,12 +8,14 @@ import com.DvFabricio.TicketSales.domain.autenticacao.repository.UsuarioReposito
 import com.DvFabricio.TicketSales.domain.autenticacao.vo.DadosCadastroUsuario;
 import com.DvFabricio.TicketSales.domain.autenticacao.vo.DadosUsuario;
 import com.DvFabricio.TicketSales.domain.email.EnviadorDeEmail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 
 @Service
 public class CadastroDeUsuarioService {
@@ -23,6 +25,7 @@ public class CadastroDeUsuarioService {
     private final PasswordEncoder passwordEncoder;
     private final EnviadorDeEmail enviadorDeEmail;
 
+    @Autowired
     public CadastroDeUsuarioService(UsuarioRepository usuarioRepository, PerfilAcessoRepository perfilAcessoRepository, PasswordEncoder passwordEncoder, EnviadorDeEmail enviadorDeEmail) {
         this.usuarioRepository = usuarioRepository;
         this.perfilAcessoRepository = perfilAcessoRepository;
@@ -66,3 +69,4 @@ public class CadastroDeUsuarioService {
     }
 
 }
+
