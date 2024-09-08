@@ -7,6 +7,8 @@ import com.DvFabricio.TicketSales.domain.evento.repository.EventoRepository;
 import com.DvFabricio.TicketSales.domain.evento.vo.DadosCadastroEvento;
 import com.DvFabricio.TicketSales.domain.evento.vo.DadosCadastroIngresso;
 import com.DvFabricio.TicketSales.domain.evento.vo.DadosEvento;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,11 +25,13 @@ public class EventoService {
         this.eventoRepository = eventoRepository;
     }
 
+    @Cacheable(value = "proximoEvento")
     public List<DadosEvento> listarProximosEventos() {
         var proximosEventos = eventoRepository.findAllByDataAfter(LocalDateTime.now());
         return proximosEventos.stream().map(DadosEvento::new).toList();
     }
 
+    @CacheEvict(value = "proximosEventos", allEntries = true)
     public DadosEvento cadastrar(DadosCadastroEvento dadosCadastro) {
         var eventoJaCadastrado = eventoRepository.existsByNomeIgnoringCase(dadosCadastro.nome());
         if (eventoJaCadastrado) {
